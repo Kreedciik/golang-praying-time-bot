@@ -2,17 +2,20 @@ package main
 
 import (
 	"fmt"
+	"github.com/joho/godotenv"
 	"github.com/mymmrac/telego"
 	th "github.com/mymmrac/telego/telegohandler"
 	tu "github.com/mymmrac/telego/telegoutil"
 	"os"
 )
 
-const (
-	botToken = "7738528744:AAF0XrlX7czGkPZwgzJQ4uXubFOCb9GwyT8"
-)
-
 func initTelegramBot() {
+	err := godotenv.Load()
+	if err != nil {
+		fmt.Println("Error loading .env file ", err)
+		os.Exit(1)
+	}
+	botToken := os.Getenv("BOT_TOKEN")
 	bot, err := telego.NewBot(botToken, telego.WithDefaultDebugLogger())
 	if err != nil {
 		fmt.Println(err)
